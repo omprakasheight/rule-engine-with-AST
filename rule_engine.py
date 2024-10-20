@@ -4,6 +4,39 @@ class Node:
         self.value = value
         self.left = left
         self.right = right
+cached_asts = {}
+
+# Function to parse incoming JSON data
+def parse_data(json_input):
+    """
+    Parse the input JSON data and return a dictionary.
+    """
+    try:
+        data = json.loads(json_input)
+        return data
+    except json.JSONDecodeError:
+        raise ValueError("Invalid JSON data")
+
+# Function to validate rule format
+def validate_rule(rule_string):
+    """
+    Validates rule strings to ensure only allowed operators and conditions are used.
+    """
+    pattern = r"^[\(\)\w\s><=!']+(AND|OR)?[\(\)\w\s><=!']+$"
+    if not re.match(pattern, rule_string):
+        raise ValueError("Invalid rule format")
+
+# Function to sanitize input data
+def sanitize_data(data):
+    """
+    Sanitizes input data to ensure it matches the expected format for rule evaluation.
+    """
+    allowed_keys = ['age', 'department', 'salary', 'experience']
+    for key in data:
+        if key not in allowed_keys:
+            raise ValueError(f"Invalid key in data: {key}")
+        if key in ['salary', 'experience'] and not isinstance(data[key], (int, float)):
+            raise ValueError(f"Invalid value for {key}: must be a number")
 
 def create_rule(rule_string):
     if rule_string == "(age > 30 AND department == 'Sales')":
