@@ -34,7 +34,7 @@ rule-engine/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/diomate/rule-engine.git
+   git clone https://github.com/omprakasheight/rule-engine.git
    cd rule-engine
    ```
 
